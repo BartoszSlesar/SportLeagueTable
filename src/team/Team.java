@@ -64,11 +64,22 @@ public class Team<T extends Player> implements Comparable<Team<T>> {
     }
 
     public int ranking() {
-        return (teamScore.getPlayed() * 2) + teamScore.getTied();
+        return (teamScore.getWon() * 2) + teamScore.getTied();
     }
 
+
+    //    return -1 when this.team is higher in ranking than team 1 otherwise
     @Override
-    public int compareTo(Team<T> o) {
-        return 0;
+    public int compareTo(Team<T> team) {
+        if (team == null) {
+            return -1;
+        }
+        int compare = 0;
+        if (this.ranking() > team.ranking()) {
+            compare = -1;
+        } else if (this.ranking() < team.ranking()) {
+            compare = 1;
+        }
+        return compare;
     }
 }
