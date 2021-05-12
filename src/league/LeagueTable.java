@@ -5,10 +5,16 @@ import team.Team;
 import java.util.*;
 
 public class LeagueTable<T extends Team> {
+    private String name;
     private ArrayList<T> teams;
 
-    public LeagueTable() {
+    public LeagueTable(String name) {
+        this.name = name;
         teams = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getNumTeams() {
@@ -27,12 +33,13 @@ public class LeagueTable<T extends Team> {
     }
 
     public void printLeagueTable() {
-//        Sorting Array to display teams higher in the ranking first, using CompareTo implemented in Teams
         Collections.sort(teams, new TeamComparator());
         for (T team : this.teams) {
-            System.out.println(team.getName());
+            System.out.println(team.getName() + ": " + team.ranking());
         }
     }
+
+
 
     private class TeamComparator implements Comparator<T> {
 
@@ -42,4 +49,5 @@ public class LeagueTable<T extends Team> {
             return team1.compareTo(team2);
         }
     }
+
 }
