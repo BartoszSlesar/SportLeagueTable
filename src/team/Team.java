@@ -8,14 +8,11 @@ import java.util.ArrayList;
 public class Team<T extends Player> implements Comparable<Team<T>> {
 
     private String name;
-    int played = 0;
-    int won = 0;
-    int lost = 0;
-    int tied = 0;
-
+    private TeamScore teamScore;
     private ArrayList<T> players;
 
     public Team(String name) {
+        this.teamScore = new TeamScore();
         this.name = name;
         players = new ArrayList<>();
     }
@@ -44,30 +41,30 @@ public class Team<T extends Player> implements Comparable<Team<T>> {
         return result;
     }
 
-//    public void matchResult(Team<T> opponent, int ourScore, int theirScore) {
-//
-//        String message;
-//
-//        if(ourScore > theirScore) {
-//            won++;
-//            message = " beat ";
-//        } else if(ourScore == theirScore) {
-//            tied++;
-//            message = " drew with ";
-//
-//        } else {
-//            lost++;
-//            message = " lost to ";
-//        }
-//        played++;
-//        if(opponent != null) {
-//            System.out.println(this.getName() + message + opponent.getName());
-//            opponent.matchResult(null, theirScore, ourScore);
-//        }
-//    }
+    public void matchResult(Team<T> opponent, int ourScore, int theirScore) {
+
+        String message;
+
+        if (ourScore > theirScore) {
+            teamScore.addWon(1);
+            message = " beat ";
+        } else if (ourScore == theirScore) {
+            teamScore.addTied(1);
+            message = " drew with ";
+
+        } else {
+            teamScore.addLost(1);
+            message = " lost to ";
+        }
+        teamScore.addPlayed(1);
+        if (opponent != null) {
+            System.out.println(this.getName() + message + opponent.getName());
+            opponent.matchResult(null, theirScore, ourScore);
+        }
+    }
 
     public int ranking() {
-        return (won * 2) + tied;
+        return (teamScore.getPlayed() * 2) + teamScore.getTied();
     }
 
     @Override
