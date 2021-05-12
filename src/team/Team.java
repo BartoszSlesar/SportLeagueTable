@@ -2,8 +2,8 @@ package team;
 
 import players.Player;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Team<T extends Player> implements Comparable<Team<T>> {
 
